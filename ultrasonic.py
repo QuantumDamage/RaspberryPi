@@ -30,31 +30,36 @@ GPIO.output(GPIO_wyzwalacz, False)
 # Czas dla modulu:
 time.sleep(1)
 
-while True:
-	print "Ctrl+C aby przerwac!"
-
-	# Wysylanie impulsu 10us do wyzwalacza:
-	GPIO.output(GPIO_wyzwalacz, True)
-	time.sleep(0.00001)
-	GPIO.output(GPIO_wyzwalacz, False)
-	start = time.time()
+try:
 	while True:
-  		if GPIO.input(GPIO_rejestrator)==1:
-			stop = time.time()
-			break
+		print "Ctrl+C aby przerwac!"
+
+		# Wysylanie impulsu 10us do wyzwalacza:
+		GPIO.output(GPIO_wyzwalacz, True)
+		time.sleep(0.00001)
+		GPIO.output(GPIO_wyzwalacz, False)
+		start = time.time()
+		while GPIO.input(GPIO_rejestrator)==0:
+  			pass
+
+		while GPIO.input(GPIO_rejestrator)==1:
+  			stop = time.time()
 	
 	
-	# Calculate pulse length
-	elapsed = stop-start
+		# Obliczanie czasu pomiedzy wyslaniem sygnalu a jego odebraniem
+		czas_trwania = stop-start
 
-	# Distance pulse travelled in that time is time
-	# multiplied by the speed of sound (cm/s)
-	distance = elapsed * 34000
+		# Powyzszy czas pomnozony przez predkosc dzwieku w cm/s da nam
+		# odleglosc_calkowita jaka przebyl impuls
+		odleglosc_calkowita = czas_trwania * 34320
 
-	# That was the distance there and back so halve the value
-	distance = distance / 2
+		# Odleglosc od obiektu bedzie wiec polowa tej odleglosci:
+		odleglosc = odleglosc_calkowita / 2
 
-	print "Distance : %.1f" % distance
+		print "Odleglosc to : %.1f [cm]" % odleglosc
 
-	time.sleep(1)
+		time.sleep(1)
 
+except KeyboardInterrupt:
+	print "Pa!"
+	GPIO.cleanup()
