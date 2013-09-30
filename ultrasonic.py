@@ -57,8 +57,10 @@ try:
 		odleglosc = odleglosc_calkowita / 2
 
 		print "Odleglosc to : %.1f [cm]" % odleglosc
+		if odleglosc < 50:
+			print "Ktos przeszedl!"
+			time.sleep(1)
 
-		time.sleep(1)
 
 except KeyboardInterrupt:
 	print "Pa!"
