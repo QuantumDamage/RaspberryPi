@@ -38,9 +38,9 @@ try:
 		GPIO.output(GPIO_wyzwalacz, True)
 		time.sleep(0.00001)
 		GPIO.output(GPIO_wyzwalacz, False)
-		start = time.time()
+		#start = time.time()
 		while GPIO.input(GPIO_rejestrator)==0:
-  			pass
+  			start = time.time()
 
 		while GPIO.input(GPIO_rejestrator)==1:
   			stop = time.time()
@@ -48,14 +48,14 @@ try:
 	
 		# Obliczanie czasu pomiedzy wyslaniem sygnalu a jego odebraniem
 		czas_trwania = stop-start
-
+		#print czas_trwania
 		# Powyzszy czas pomnozony przez predkosc dzwieku w cm/s da nam
 		# odleglosc_calkowita jaka przebyl impuls
 		odleglosc_calkowita = czas_trwania * 34320
 
 		# Odleglosc od obiektu bedzie wiec polowa tej odleglosci:
 		odleglosc = odleglosc_calkowita / 2
-
+		time.sleep(1)
 		print "Odleglosc to : %.1f [cm]" % odleglosc
 		if odleglosc < 50:
 			print "Ktos przeszedl!"
