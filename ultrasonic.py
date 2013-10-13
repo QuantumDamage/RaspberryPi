@@ -19,13 +19,14 @@ GPIO.setmode(GPIO.BOARD)
 # zgodnie z rysunkiem
 GPIO_wyzwalacz = 16
 GPIO_rejestrator = 18
-
+GPIO_dioda = 22
 # Przygotowanie pinow
-GPIO.setup(GPIO_wyzwalacz,GPIO.OUT)  # Trigger
-GPIO.setup(GPIO_rejestrator,GPIO.IN)   # Echo
-
+GPIO.setup(GPIO_wyzwalacz,GPIO.OUT)	# Trigger
+GPIO.setup(GPIO_rejestrator,GPIO.IN)	# Echo
+GPIO.setup(GPIO_dioda,GPIO.OUT)		#dioda
 # Ustawienie wyzwalacza na 0V
 GPIO.output(GPIO_wyzwalacz, False)
+GPIO.output(GPIO_dioda, False)
 
 # Czas dla modulu:
 time.sleep(1)
@@ -55,11 +56,14 @@ try:
 
 		# Odleglosc od obiektu bedzie wiec polowa tej odleglosci:
 		odleglosc = odleglosc_calkowita / 2
-		time.sleep(1)
+		#time.sleep(1)
 		print "Odleglosc to : %.1f [cm]" % odleglosc
 		if odleglosc < 50:
 			print "Ktos przeszedl!"
-			time.sleep(1)
+			GPIO.output(GPIO_dioda, True)
+			#time.sleep(1)
+		else :
+			GPIO.output(GPIO_dioda, False)
 
 
 except KeyboardInterrupt:
