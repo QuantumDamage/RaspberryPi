@@ -58,12 +58,13 @@ try:
 		odleglosc = odleglosc_calkowita / 2
 		#time.sleep(1)
 		print "Odleglosc to : %.1f [cm]" % odleglosc
-		if odleglosc < 50:
+		if odleglosc < 30:
 			print "Ktos przeszedl!"
 			GPIO.output(GPIO_dioda, True)
-			#time.sleep(1)
+			time.sleep(0.1)
 		else :
 			GPIO.output(GPIO_dioda, False)
+			time.sleep(0.1)
 
 
 except KeyboardInterrupt:
